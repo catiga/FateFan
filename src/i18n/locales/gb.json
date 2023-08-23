@@ -9,7 +9,7 @@
   },
   "menu": {
     "dashboard": "Dashboard",
-    "train" : {
+    "train": {
       "title": "Train",
       "data": "Train Data",
       "character": "Character"
