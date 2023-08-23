@@ -4,7 +4,7 @@
       v-model="email"
       class="mb-4"
       type="email"
-      :label="t('auth.email')"
+      :label="t('auth.username')"
       :error="!!emailErrors.length"
       :error-messages="emailErrors"
     />
@@ -38,7 +38,7 @@
     </div>
 
     <div class="flex justify-center mt-4">
-      <va-button class="my-0" @click="onsubmit">{{ t('auth.sign_up') }}</va-button>
+      <va-button class="my-0" @click="onsubmit">{{ t('auth.btn.sign_up') }}</va-button>
     </div>
   </form>
 </template>

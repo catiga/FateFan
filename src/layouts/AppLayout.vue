@@ -2,13 +2,23 @@
   <div class="app-layout">
     <navbar />
     <div class="app-layout__content">
+      <div class="app-layout__sidebar-wrapper" :class="{ minimized: isSidebarMinimized }">
+        <div v-if="isFullScreenSidebar" class="flex justify-end">
+          <va-button class="px-4 py-4" icon="md_close" preset="plain" color="dark" @click="onCloseSidebarButtonClick" />
+        </div>
+        <sidebar
+          :width="sidebarWidth"
+          :minimized="isSidebarMinimized"
+          :minimized-width="sidebarMinimizedWidth"
+          :animated="!isMobile"
+        />
+      </div>
       <div class="app-layout__page">
         <div class="p-2 md:px-6 md:py-9">
           <router-view />
         </div>
       </div>
     </div>
-    <bottombar />
   </div>
 </template>
 
@@ -21,7 +31,6 @@
 
   import Navbar from '../components/navbar/Navbar.vue'
   import Sidebar from '../components/sidebar/Sidebar.vue'
-  import Bottombar from '../components/navbar/Bottombar.vue'
 
   const GlobalStore = useGlobalStore()
 

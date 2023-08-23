@@ -7,6 +7,8 @@ export const useGlobalStore = defineStore('global', {
       userName: 'Vasili S',
       userAddress: '', // 钱包地址
       userChainId: 0, // 链 ID
+
+      loginAdmin: JSON.parse(localStorage.getItem('loginAdmin') || '{"userId": 0, "userToken": ""}'),
     }
   },
 
@@ -30,6 +32,12 @@ export const useGlobalStore = defineStore('global', {
 
     setUserChainId(address: number) {
       this.userChainId = address
+    },
+
+    setLoginAdmin(e: any) {
+      this.loginAdmin.userId = e.userId
+      this.loginAdmin.userToken = e.userToken
+      localStorage.setItem('loginAdmin', JSON.stringify(this.loginAdmin))
     },
   },
 })

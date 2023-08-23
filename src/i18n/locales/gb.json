@@ -7,27 +7,39 @@
     "title": "Lucky Hash Ring",
     "message": "Hash world possesses fairness"
   },
+  "menu": {
+    "dashboard": "Dashboard",
+    "train" : {
+      "title": "Train",
+      "data": "Train Data",
+      "character": "Character"
+    }
+  },
+  "train-data": {
+    "form": "Form",
+    "character": "Character",
+    "constraint": "Constraint",
+    "question": "Prompt",
+    "answer": "Answer",
+    "btn": {
+      "save-train": "Save Train Data",
+      "gpt-train": "Request AI Data"
+    }
+  },
   "links": {
     "repository": "Github",
     "community": "Telegram"
   },
-  "round-info": {
-    "current": "Running Round",
-    "past": "Past Round Information",
-    "round-num": "Round Number",
-    "round-participant": "Participants",
-    "round-prize": "Round Prize",
-    "round-bid": "Bid Value",
-    "support-chains": "Support Chains",
-    "introduction": "How To Play",
-    "details-1": "1.Each round requires 16 participants.",
-    "details-2": "2.Participants contribute a fixed amount.",
-    "details-3": "3.The draw occurs automatically after 16 entries.",
-    "details-4": "4.Winners are determined by a specific algorithm.",
-    "details-5": "5.Rounds may have no winners or multiple winners.",
-    "details-6": "6.If no winner, the prize rolls over to the next round. If multiple winners, the prize is split evenly.",
-    "details-7": "7.After a round ends, the next begins automatically.",
-    "details-8": "8.Invite others to participate. If the invited person wins, the inviter receives a 10% prize share",
-    "invite-button": "Copy Invite Url"
+  "auth": {
+    "username": "username",
+    "password": "password",
+    "login": "Login",
+    "keep_login": "Keep Logined",
+    "create_account": "Create New",
+    "recover_password": "Recover Password",
+    "btn": {
+      "sign_in": "Sign In",
+      "sign_up": "Sign Up"
+    }
   }
 }

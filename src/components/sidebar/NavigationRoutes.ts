@@ -12,56 +12,49 @@ export default {
   },
   routes: [
     {
-      name: 'dashboard-home',
+      name: 'dashboard',
       displayName: 'menu.dashboard',
       meta: {
         icon: 'vuestic-iconset-dashboard',
       },
     },
-
     {
-      name: 'event-activity',
-      displayName: 'menu.event',
-      meta: {
-        icon: 'vuestic-iconset-forms',
-      },
-      disabled: true,
-      children: [
-        {
-          name: 'event-stake',
-          displayName: 'menu.event-items.high-stake',
-        },
-      ],
-    },
-
-    {
-      name: 'batch-manage',
-      displayName: 'menu.batchManage',
+      name: 'train',
+      displayName: 'menu.train.title',
       meta: {
         icon: 'vuestic-iconset-statistics',
       },
       disabled: true,
       children: [
         {
-          name: 'batch-transfer',
-          displayName: 'menu.batchTransfer',
+          name: 'train-setting-character',
+          displayName: 'menu.train.character',
         },
-      ],
-    },
-    {
-      name: 'transfer-manage',
-      displayName: 'menu.transferManage',
-      meta: {
-        icon: 'vuestic-iconset-forms',
-      },
-      disabled: true,
-      children: [
         {
-          name: 'trade-route',
-          displayName: 'menu.transferRoute',
+          name: 'train-data',
+          displayName: 'menu.train.data',
         },
       ],
     },
+
+    // {
+    //   name: 'statistics',
+    //   displayName: 'menu.statistics',
+    //   meta: {
+    //     icon: 'vuestic-iconset-statistics',
+    //   },
+    //   disabled: true,
+    //   children: [
+    //     {
+    //       name: 'charts',
+    //       displayName: 'menu.charts',
+    //     },
+    //     {
+    //       name: 'progress-bars',
+    //       displayName: 'menu.progressBars',
+    //     },
+    //   ],
+    // },
     // {
     //   name: 'forms',
     //   displayName: 'menu.forms',

@@ -20,30 +20,10 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     proxy: {
-      '/txbit': {
-        target: 'https://api.txbit.io/',
+      '/rpc': {
+        target: 'http://localhost:18080/',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/txbit/, ''),
-      },
-      '/swft': {
-        target: 'https://www.swftc.info/',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/swft/, ''),
-      },
-      '/mexc': {
-        target: 'https://chain-app.fenus.xyz/',
-        changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/mexc/, ''),
-      },
-      '/binance': {
-        target: 'https://chain-app.fenus.xyz/',
-        changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/binance/, ''),
-      },
-      '/coinw': {
-        target: 'https://chain-app.fenus.xyz/',
-        changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/coinw/, ''),
+        rewrite: (path) => path.replace(/^\/rpc/, ''),
       },
     },
   },
