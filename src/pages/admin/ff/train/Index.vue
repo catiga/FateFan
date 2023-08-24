@@ -54,12 +54,15 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive, ref } from 'vue'
-  import { useI18n } from 'vue-i18n'
-  const { t } = useI18n()
-  import { onMounted } from 'vue'
   import axios from 'axios'
   import qs from 'qs'
+  import { onMounted } from 'vue'
+  import { reactive, ref } from 'vue'
+  import { useI18n } from 'vue-i18n'
+  import { useForm, useModal, useToast, useColors } from 'vuestic-ui'
+  const { t } = useI18n()
+
+  const { init } = useToast()
 
   interface CharRole {
     id: number
@@ -184,8 +187,8 @@
   }
 
   const handleTrain = async () => {
-    let prompt = '背景信息是：' + form.constraint + '\n'
-    prompt += '使用' + form.method.name + '方法\n'
+    let prompt = '' + form.constraint + '\n'
+    prompt += '' + form.method?.name + '\n'
     prompt += '' + form.question
     const d = {
       type: 'chatGPT',
@@ -193,6 +196,10 @@
       data: prompt,
     }
     ws.send(JSON.stringify(d))
+  }
+
+  const handleSave = async () => {
+    init({ message: 'unsupport operation for now', color: 'danger' })
   }
 
   onMounted(() => {

@@ -20,12 +20,12 @@
 </template>
 
 <script setup lang="ts">
+  import axios from 'axios'
+  import qs from 'qs'
   import { ref, watchEffect } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { useForm, useModal, useToast, useColors } from 'vuestic-ui'
   import { onMounted } from 'vue'
-  import axios from 'axios'
-  import qs from 'qs'
 
   interface CharRole {
     id: number
