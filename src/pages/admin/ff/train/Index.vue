@@ -187,6 +187,7 @@
   }
 
   const handleTrain = async () => {
+    form.answer = ''
     let prompt = '' + form.constraint + '\n'
     prompt += '' + form.method?.name + '\n'
     prompt += '' + form.question
@@ -208,14 +209,22 @@
   })
 
   //ws
-  const ws: WebSocket = new WebSocket('ws://localhost:18080/spwapi/ws')
+  // const wsUri = 'ws://localhost:18080/spwapi/ws'
+  const wsUri = 'wss://rp.fenus.xyz/rpc/spwapi/ws'
+  const ws: WebSocket = new WebSocket(wsUri)
 
   ws.onopen = () => {
     console.log('WebSocket is connected.')
+    setInterval(() => {
+      ws.send('ping')
+    }, 1000 * 60 * 5)
   }
 
   ws.onmessage = (event) => {
     const message = event.data
+    if (message == 'pong') {
+      return
+    }
     if (!form.answer) {
       form.answer = message
     } else {
