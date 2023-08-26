@@ -192,8 +192,10 @@
     prompt += '' + form.method?.name + '\n'
     prompt += '' + form.question
     const d = {
-      type: 'chatGPT',
-      method: 'request_train',
+      type: 'chat_init',
+      method: 'chatGPT',
+      lan: 'zh-CN',
+      ascode: '0001',
       data: prompt,
     }
     ws.send(JSON.stringify(d))
@@ -209,8 +211,8 @@
   })
 
   //ws
-  // const wsUri = 'ws://localhost:18080/spwapi/ws'
-  const wsUri = 'wss://rp.fenus.xyz/rpc/spwapi/ws'
+  const wsUri = 'ws://localhost:18080/spwapi/ws'
+  // const wsUri = 'wss://rp.fenus.xyz/rpc/spwapi/ws'
   const ws: WebSocket = new WebSocket(wsUri)
 
   ws.onopen = () => {
@@ -225,10 +227,11 @@
     if (message == 'pong') {
       return
     }
+    let ret = JSON.parse(message)
     if (!form.answer) {
-      form.answer = message
+      form.answer = ret.Data
     } else {
-      form.answer += message
+      form.answer += ret.Data
     }
   }
 

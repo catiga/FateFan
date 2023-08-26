@@ -12,7 +12,8 @@
     "train": {
       "title": "训练",
       "data": "训练数据",
-      "character": "人物角色"
+      "character": "人物角色",
+      "adjust": "调参"
     }
   },
   "train-data": {

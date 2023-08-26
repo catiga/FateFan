@@ -12,7 +12,8 @@
     "train": {
       "title": "Train",
       "data": "Train Data",
-      "character": "Character"
+      "character": "Character",
+      "adjust": "Adjust"
     }
   },
   "train-data": {

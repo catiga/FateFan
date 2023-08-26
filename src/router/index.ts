@@ -46,6 +46,14 @@ const routes: Array<RouteRecordRaw> = [
               wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Charts',
             },
           },
+          {
+            name: 'train-adjust',
+            path: 'adjust',
+            component: () => import('../pages/admin/ff/train/Lists.vue'),
+            meta: {
+              wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Charts',
+            },
+          },
         ],
       },
 

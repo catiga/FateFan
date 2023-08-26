@@ -34,6 +34,10 @@ export default {
           name: 'train-data',
           displayName: 'menu.train.data',
         },
+        {
+          name: 'train-adjust',
+          displayName: 'menu.train.adjust',
+        },
       ],
     },
 
