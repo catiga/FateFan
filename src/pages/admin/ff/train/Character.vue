@@ -81,8 +81,8 @@
             </div>
 
             <div class="flex">
-              <UploadOss v-model="form.bodyimg" :path="'/bodyimg'" :showtext="'Upload Bodyimg'"/>
-              <UploadOss v-model="form.avatar" :path="'/avatar'" :showtext="'Upload Avatar'" class="ml-12"/>
+              <UploadOss v-model="form.bodyimg" :path="'/bodyimg'" :showtext="'Upload Bodyimg'" />
+              <UploadOss v-model="form.avatar" :path="'/avatar'" :showtext="'Upload Avatar'" class="ml-12" />
             </div>
             <!-- <div class="flex md:col-span-12 sm:col-span-6 col-span-12">
             </div> -->
@@ -107,7 +107,7 @@
   import { useI18n } from 'vue-i18n'
   import { useForm, useModal, useToast, useColors } from 'vuestic-ui'
   import { onMounted } from 'vue'
-  import UploadOss from '../../../../components/UploadOss.vue';
+  import UploadOss from '../../../../components/UploadOss.vue'
 
   interface CharRole {
     id: number
@@ -122,8 +122,8 @@
     lan: string
     profile: string
     region: string
-    nature: number,
-    bodyimg: string,
+    nature: number
+    bodyimg: string
   }
 
   const createEmpty = (): CharRole => {
@@ -191,6 +191,7 @@
             profile: e.CharProfile,
             region: e.CharRegion,
             nature: e.CharNatureCode,
+            bodyimg: e.CharFullBody,
           })
         }
         listLoops.value = characters.value.length
