@@ -80,6 +80,13 @@
               </va-input>
             </div>
 
+            <div class="flex">
+              <UploadOss v-model="form.bodyimg" :path="'/bodyimg'" :showtext="'Upload Bodyimg'"/>
+              <UploadOss v-model="form.avatar" :path="'/avatar'" :showtext="'Upload Avatar'" class="ml-12"/>
+            </div>
+            <!-- <div class="flex md:col-span-12 sm:col-span-6 col-span-12">
+            </div> -->
+
             <div class="flex md:col-span-12 sm:col-span-6 col-span-12">
               <va-button :loading="submiting" :disabled="submiting" @click="submit"> Update Save </va-button>
               <va-button :loading="submiting" :disabled="submiting" color="warning" @click="submitNew">
@@ -100,6 +107,7 @@
   import { useI18n } from 'vue-i18n'
   import { useForm, useModal, useToast, useColors } from 'vuestic-ui'
   import { onMounted } from 'vue'
+  import UploadOss from '../../../../components/UploadOss.vue';
 
   interface CharRole {
     id: number
@@ -114,7 +122,8 @@
     lan: string
     profile: string
     region: string
-    nature: number
+    nature: number,
+    bodyimg: string,
   }
 
   const createEmpty = (): CharRole => {
@@ -132,6 +141,7 @@
       profile: '',
       region: '',
       nature: 0,
+      bodyimg: '',
     }
     return e
   }

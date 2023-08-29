@@ -5,7 +5,7 @@
         @fileRemoved="handleRemoved"
         type="gallery"
         file-types="image/*"
-    />
+    ><va-button class="upload-btn" :loading="submiting" :disabled="submiting"> {{ showtext }} </va-button></va-file-upload>
 </template>
 
 <script>
@@ -19,11 +19,15 @@ export default {
             require: true,
         },
         modelValue: {
-            type: Array
+            type: String,
         },
         limitSize: {
             type: Number,
             default: 5
+        },
+        showtext: {
+            type: String,
+            default: 'upload'
         }
     },
     data() {
@@ -31,7 +35,8 @@ export default {
             client: null,
             originFile: [],
             ossImgList: [],
-            basic: ''
+            basic: '',
+            submiting: false,
         }
     },
     watch: {
@@ -58,6 +63,7 @@ export default {
         },
         ossUpload(files) {
             let resultOss = []
+            this.submiting = true
             files.forEach(async (v,i) => {
                 // let fileSizeInMB = v.size / (1024 * 1024); // 文件大小以MB为单位
                 // if (fileSizeInMB > this.limitSize) {
@@ -77,7 +83,9 @@ export default {
             Promise.all(resultOss).then(res => {
                 this.postImgLoading = false
                 this.ossImgList = [...this.ossImgList, ...res]
-                this.$emit('update:modelValue', this.ossImgList)
+                // 单图
+                this.submiting = false
+                this.$emit('update:modelValue', this.ossImgList[0])
             })
         },
         getName(file) {
@@ -95,5 +103,8 @@ export default {
 }
 .va-file-upload-list {
     flex-wrap: initial;
+}
+.upload-btn {
+    white-space: nowrap;
 }
 </style>
