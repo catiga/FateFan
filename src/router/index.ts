@@ -53,6 +53,14 @@ const routes: Array<RouteRecordRaw> = [
               wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Charts',
             },
           },
+          {
+            name: 'upload-example',
+            path: 'upload',
+            component: () => import('../pages/admin/pages/uploadExample.vue'),
+            meta: {
+              wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Charts',
+            },
+          },
         ],
       },
     ],

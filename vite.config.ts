@@ -7,6 +7,9 @@ import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 import NodeModulesPolyfills from '@esbuild-plugins/node-modules-polyfill'
 import nodePolyfills from 'vite-plugin-node-stdlib-browser'
 import https from 'https'
+import path from 'path'
+
+const pathSrc = path.resolve(__dirname, 'src')
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,6 +29,11 @@ export default defineConfig({
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/rpc/, ''),
       },
+    },
+  },
+  resolve: {
+    alias: {
+      '~/': `${pathSrc}/`,
     },
   },
   // optimizeDeps: {
