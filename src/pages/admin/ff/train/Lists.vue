@@ -44,23 +44,48 @@
     <va-card class="col-span-12 lg:col-span-6 p-4">
       <va-form ref="transferForm" class="flex flex-col gap-6">
         <va-list class="py-4">
-          <va-list-label>
-            {{ t('lists.starterKit') }}
-          </va-list-label>
+          <va-list-label> 角色参数优化 </va-list-label>
 
           <va-list-item class="mb-2" clickable>
             <va-list-item-section>
-              <va-list-item-label>Role Setting</va-list-item-label>
+              <va-list-item-label>调参类型</va-list-item-label>
               <va-select v-model="form.role" class="mb-4" :options="roleList" track-by="code" text-by="name" />
             </va-list-item-section>
           </va-list-item>
 
           <va-list-item clickable>
             <va-list-item-section>
-              <va-list-item-label>Description Setting</va-list-item-label>
+              <va-list-item-label>排序优先级</va-list-item-label>
+
+              <va-list-item-label caption>
+                <va-input v-model="form.seq" class="mb-8" type="number" />
+              </va-list-item-label>
+            </va-list-item-section>
+          </va-list-item>
+
+          <va-list-separator fit spaced />
+
+          <va-list-item clickable>
+            <va-list-item-section>
+              <va-list-item-label>{{ form.role.code == 'system' ? '角色描述' : '样例问题' }}</va-list-item-label>
 
               <va-list-item-label caption>
                 <va-input v-model="form.prompt" class="mb-8" type="textarea" />
+              </va-list-item-label>
+            </va-list-item-section>
+          </va-list-item>
+
+          <va-list-item clickable>
+            <va-list-item-section>
+              <va-list-item-label>{{ form.role.code != 'assistant' ? '不可用' : '样例回答' }}</va-list-item-label>
+
+              <va-list-item-label caption>
+                <va-input
+                  v-model="form.answer"
+                  class="mb-8"
+                  type="textarea"
+                  :disabled="form.role.code != 'assistant'"
+                />
               </va-list-item-label>
             </va-list-item-section>
           </va-list-item>
@@ -80,9 +105,14 @@
       <va-card-title>{{ selectChar?.name }} 角色设定</va-card-title>
       <va-card-content>
         <va-accordion>
-          <va-collapse v-for="(item, index) in charsettings" :key="index" :header="item.role">
+          <va-collapse
+            v-for="(item, index) in charsettings"
+            :key="index"
+            :header="(item.role == 'system' ? '角色设定' : '数据设定') + '-优先级' + item.seq"
+          >
             <div class="p-4">
               <div>{{ item.prompt }}</div>
+              <div v-if="item.role == 'assistant'">回答：{{ item.answer }}</div>
               <va-button :loading="deleteStatus" :disable="deleteStatus" @click="handleDelete(item)">Delete</va-button>
             </div>
           </va-collapse>
@@ -119,6 +149,7 @@
     role: string
     prompt: string
     seq: number
+    answer: string
   }
 
   interface SettingRole {
@@ -128,6 +159,8 @@
   interface Setting {
     role: SettingRole
     prompt: string
+    answer: string
+    seq: number
   }
 
   const { t } = useI18n()
@@ -136,11 +169,11 @@
   const roleList = ref([
     {
       code: 'system',
-      name: '系统设定',
+      name: '角色设定',
     },
     {
       code: 'assistant',
-      name: '环境设定',
+      name: '数据设定',
     },
   ])
 
@@ -150,7 +183,7 @@
   const submitPlace = ref<boolean>(false)
   const deleteStatus = ref<boolean>(false)
 
-  const form = reactive<Setting>({ role: { name: '', code: '' }, prompt: '' })
+  const form = reactive<Setting>({ role: { name: '', code: '' }, prompt: '', answer: '', seq: 0 })
 
   const appBanners = ref(false)
   const banners = ref(false)
@@ -223,6 +256,7 @@
             prompt: e.Prompt,
             seq: e.Seq,
             role: e.Role,
+            answer: e.Answer,
           })
         }
       }
@@ -242,7 +276,13 @@
     try {
       const response = await axios.post(
         '/rpc/spwapi/admin/charsetsave',
-        qs.stringify({ charId: selectChar?.value.id, role: form.role.code, prompt: form.prompt }),
+        qs.stringify({
+          charId: selectChar?.value.id,
+          role: form.role.code,
+          prompt: form.prompt,
+          answer: form.answer,
+          seq: form.seq,
+        }),
         {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
