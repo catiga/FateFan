@@ -104,11 +104,9 @@
     <va-card class="col-span-12">
       <va-card-title>{{ selectChar?.name }} 角色设定</va-card-title>
       <va-card-content>
-        <va-accordion>
+        <va-accordion v-for="(item, index) in charsettings" :key="index" active="true">
           <va-collapse
-            v-for="(item, index) in charsettings"
-            :key="index"
-            :header="(item.role == 'system' ? '角色设定' : '数据设定') + '-优先级' + item.seq"
+            :header="index + 1 + ':' + (item.role == 'system' ? '角色设定' : '数据设定') + '-优先级' + item.seq"
           >
             <div class="p-4">
               <div>{{ item.prompt }}</div>
