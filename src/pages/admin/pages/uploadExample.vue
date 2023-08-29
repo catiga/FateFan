@@ -18,7 +18,4 @@ watch(
         console.log('val::', val)
     }, 
     {
-        deep:true, // 深度监听
-        immediate:true // 立即执行
-    })
-</script>
+        deep:true, // 深度监听        immediate:true // 立即执行    })</script>
