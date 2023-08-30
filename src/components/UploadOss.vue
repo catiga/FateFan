@@ -1,5 +1,5 @@
 <template>
-  <va-file-upload
+  <!-- <va-file-upload
     v-model="basic"
     type="gallery"
     file-types="image/*"
@@ -8,7 +8,28 @@
     ><va-button class="upload-btn" :loading="submiting" :disabled="submiting">
       {{ showtext }}
     </va-button></va-file-upload
-  >
+  > -->
+  <div>
+    <va-button
+      class="upload-btn"
+      :loading="submiting"
+      :disabled="submiting"
+      @click="modelValue ? handleDelete() : handleUploadClick()"
+    >
+      {{ modelValue ? 'Delete' : showtext }}
+    </va-button>
+    <div class="image-list mt-4">
+      <va-image class="w-36 rounded-xl overflow-hidden" :ratio="9 / 9" :src="modelValue" />
+    </div>
+    <!-- 上传 input -->
+    <input
+      ref="selectFile"
+      type="file"
+      style="display: none"
+      accept="image/png, image/jpeg, image/jpg, image/webp"
+      @change="handlefile($event)"
+    />
+  </div>
 </template>
 
 <script>
@@ -36,10 +57,9 @@
     data() {
       return {
         client: null,
-        originFile: [],
         ossImgList: [],
-        basic: '',
         submiting: false,
+        bloburl: null,
       }
     },
     watch: {
@@ -51,22 +71,13 @@
     },
     methods: {
       handlefile(e) {
-        let files = e
-        this.originFile = files
+        let files = e.target.files
+        this.submiting = true
         files = Array.prototype.slice.call(files)
         this.ossUpload(files)
       },
-      handleRemoved(e) {
-        let index = this.originFile.findIndex((v, i) => {
-          return v.name == e.name && v.size == v.size
-        })
-        this.originFile.splice(index, 1)
-        this.ossImgList.splice(index, 1)
-        this.$emit('update:modelValue', this.ossImgList)
-      },
       ossUpload(files) {
         let resultOss = []
-        this.submiting = true
         files.forEach(async (v, i) => {
           // let fileSizeInMB = v.size / (1024 * 1024); // 文件大小以MB为单位
           // if (fileSizeInMB > this.limitSize) {
@@ -100,6 +111,13 @@
       getName(file) {
         let nameArray = file.name.split('.')
         return `${getFileName()}-${nameArray[0]}.${nameArray[nameArray.length - 1].toLocaleLowerCase()}`
+      },
+      handleUploadClick() {
+        this.$refs['selectFile'].click()
+      },
+      handleDelete() {
+        this.ossImgList = []
+        this.$emit('update:modelValue', '')
       },
     },
   }
