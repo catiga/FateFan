@@ -191,6 +191,7 @@
             profile: e.CharProfile,
             region: e.CharRegion,
             nature: e.CharNatureCode,
+            bodyimg: e.CharFullBody,
           })
         }
         listLoops.value = characters.value.length
@@ -202,6 +203,7 @@
   }
 
   const handleClick = async (item: CharRole) => {
+    console.log(item, item)
     form.id = item.id
     form.name = item.name
     form.avatar = item.avatar
@@ -215,6 +217,8 @@
     form.profile = item.profile
     form.region = item.region
     form.nature = item.nature
+    form.avatar = item.avatar
+    form.bodyimg = item.bodyimg
   }
 
   const submit = async () => {
