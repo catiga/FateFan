@@ -13,7 +13,8 @@
       "title": "Train",
       "data": "Train Data",
       "character": "Character",
-      "adjust": "Adjust"
+      "adjust": "Adjust",
+      "catalog": "Catalog"
     }
   },
   "train-data": {

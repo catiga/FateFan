@@ -54,9 +54,9 @@ const routes: Array<RouteRecordRaw> = [
             },
           },
           {
-            name: 'upload-example',
-            path: 'upload',
-            component: () => import('../pages/admin/pages/uploadExample.vue'),
+            name: 'train-mys-catalog',
+            path: 'catalog',
+            component: () => import('../pages/admin/ff/train/Catalog.vue'),
             meta: {
               wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Charts',
             },

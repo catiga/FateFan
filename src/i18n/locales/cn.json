@@ -13,7 +13,8 @@
       "title": "训练",
       "data": "训练数据",
       "character": "人物角色",
-      "adjust": "调参"
+      "adjust": "调参",
+      "catalog": "占卜分类"
     }
   },
   "train-data": {

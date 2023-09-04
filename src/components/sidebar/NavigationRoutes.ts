@@ -38,6 +38,10 @@ export default {
           name: 'train-adjust',
           displayName: 'menu.train.adjust',
         },
+        {
+          name: 'train-mys-catalog',
+          displayName: 'menu.train.catalog',
+        },
       ],
     },
 
