@@ -27,6 +27,22 @@
       "gpt-train": "Request AI Data"
     }
   },
+  "character": {
+    "form": "form",
+    "name": "character name",
+    "info": "short information",
+    "birth": "text of birth",
+    "age": "text of age",
+    "place": "text of birth place",
+    "gender": "text of gender",
+    "region": "text of region",
+    "code": "uni code",
+    "lan": "language",
+    "nature": "speak random value",
+    "profile": "profile",
+    "avatar": "avatar",
+    "bodyimg": "full body image"
+  },
   "links": {
     "repository": "Github",
     "community": "Telegram"

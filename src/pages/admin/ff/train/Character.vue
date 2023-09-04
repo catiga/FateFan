@@ -20,48 +20,42 @@
     </va-card>
 
     <va-card class="col-span-12">
-      <va-card-title>Character Info</va-card-title>
+      <va-card-title>{{ t('character.form') }}</va-card-title>
       <va-card-content>
         <form>
           <div class="grid grid-cols-12 gap-6">
             <div class="flex md:col-span-4 sm:col-span-6 col-span-12">
-              <va-input v-model="form.name" placeholder="character name" />
+              <va-input v-model="form.name" :placeholder="t('character.name')" />
             </div>
             <div class="flex md:col-span-4 sm:col-span-6 col-span-12">
-              <va-input v-model="form.info" placeholder="character info">
+              <va-input v-model="form.info" :placeholder="t('character.info')">
                 <template #prepend>
                   <va-icon color="gray" name="envelope" />
                 </template>
               </va-input>
             </div>
             <div class="flex md:col-span-4 sm:col-span-6 col-span-12">
-              <va-input v-model="form.avatar" placeholder="Upldate character avatar">
-                <template #append>
-                  <va-button style="margin-right: 0" small> UPLOAD </va-button>
-                </template>
+              <va-input v-model="form.birth" label="describe birth" :placeholder="t('character.birth')" success>
               </va-input>
             </div>
             <div class="flex md:col-span-4 sm:col-span-6 col-span-12">
-              <va-input v-model="form.birth" label="describe birth" success> </va-input>
+              <va-input v-model="form.age" :placeholder="t('character.age')" clearable />
             </div>
             <div class="flex md:col-span-4 sm:col-span-6 col-span-12">
-              <va-input v-model="form.age" placeholder="input character age" clearable />
-            </div>
-            <div class="flex md:col-span-4 sm:col-span-6 col-span-12">
-              <va-input v-model="form.place" label="input birth place" error :error-messages="errorMessages">
+              <va-input v-model="form.place" :placeholder="t('character.place')" error :error-messages="errorMessages">
               </va-input>
             </div>
             <div class="flex md:col-span-4 sm:col-span-6 col-span-12">
-              <va-input v-model="form.gender" placeholder="describe gender" :messages="messages" />
+              <va-input v-model="form.gender" :placeholder="t('character.gender')" :messages="messages" />
             </div>
             <div class="flex md:col-span-4 sm:col-span-6 col-span-12">
-              <va-input v-model="form.region" placeholder="describe region area" :messages="messages" />
+              <va-input v-model="form.region" :placeholder="t('character.region')" :messages="messages" />
             </div>
             <div class="flex md:col-span-4 sm:col-span-6 col-span-12">
               <va-slider
                 v-model="form.nature"
                 color="danger"
-                label="character nature"
+                :label="t('character.nature')"
                 invert-label
                 icon-prepend="music"
                 track-label-visible
@@ -69,28 +63,40 @@
             </div>
 
             <div class="flex md:col-span-6 sm:col-span-6 col-span-12">
-              <va-input v-model="form.code" placeholder="describe code" />
+              <va-input v-model="form.code" :placeholder="t('character.code')" />
             </div>
             <div class="flex md:col-span-6 sm:col-span-6 col-span-12">
-              <va-input v-model="form.lan" placeholder="describe language" />
+              <va-select v-model="form.lan" class="mb-4" :options="lanList" track-by="code" text-by="name" />
             </div>
 
             <div class="flex md:col-span-12 sm:col-span-6 col-span-12">
-              <va-input v-model="form.profile" label="edit profile" type="textarea" error min-rows="10" max-rows="20">
+              <va-input
+                v-model="form.profile"
+                :label="t('character.profile')"
+                type="textarea"
+                error
+                min-rows="10"
+                max-rows="20"
+              >
               </va-input>
             </div>
 
             <div class="flex">
-              <UploadOss v-model="form.bodyimg" :path="'/bodyimg'" :showtext="'Upload Bodyimg'" />
-              <UploadOss v-model="form.avatar" :path="'/avatar'" :showtext="'Upload Avatar'" class="ml-12" />
+              <UploadOss v-model="form.bodyimg" :path="'/bodyimg'" :showtext="'setting ' + t('character.bodyimg')" />
+              <UploadOss
+                v-model="form.avatar"
+                :path="'/avatar'"
+                :showtext="'setting ' + t('character.avatar')"
+                class="ml-12"
+              />
             </div>
-            <!-- <div class="flex md:col-span-12 sm:col-span-6 col-span-12">
-            </div> -->
 
             <div class="flex md:col-span-12 sm:col-span-6 col-span-12">
-              <va-button :loading="submiting" :disabled="submiting" @click="submit"> Update Save </va-button>
+              <va-button :loading="submiting" :disabled="submiting" @click="submit">
+                {{ t('character.save-update') }}
+              </va-button>
               <va-button :loading="submiting" :disabled="submiting" color="warning" @click="submitNew">
-                New Save
+                {{ t('character.save-insert') }}
               </va-button>
             </div>
           </div>
@@ -108,6 +114,17 @@
   import { useForm, useModal, useToast, useColors } from 'vuestic-ui'
   import { onMounted } from 'vue'
   import UploadOss from '../../../../components/UploadOss.vue'
+
+  const lanList = ref([
+    {
+      code: 'en',
+      name: 'English',
+    },
+    {
+      code: 'zh-CN',
+      name: '简体中文',
+    },
+  ])
 
   interface CharRole {
     id: number

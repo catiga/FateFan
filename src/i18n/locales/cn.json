@@ -27,6 +27,24 @@
       "gpt-train": "智能获取结果"
     }
   },
+  "character": {
+    "form": "表单",
+    "name": "角色名",
+    "info": "角色简介",
+    "birth": "出生说明",
+    "age": "年龄说明",
+    "place": "出生地",
+    "gender": "性别描述",
+    "region": "所在区域",
+    "code": "角色唯一编码",
+    "lan": "角色多语言",
+    "nature": "回复随机性",
+    "profile": "角色档案",
+    "avatar": "角色头像",
+    "bodyimg": "角色全身照",
+    "save-insert": "新增角色",
+    "save-update": "更新角色"
+  },
   "links": {
     "repository": "Github",
     "community": "Telegram"
