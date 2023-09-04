@@ -89,6 +89,7 @@
     code: string
     lan: string
     pid: number
+    children?: CatMod[]
   }
 
   const submitPlace = ref(false)
@@ -98,7 +99,7 @@
 
   const selectedNodes = ref([])
 
-  const catalogData = ref([])
+  const catalogData = ref<CatMod[]>([])
 
   const form = reactive<CatInfo>({
     code: '',
@@ -168,6 +169,9 @@
             id: e.Id,
             label: e.Name,
             code: e.Code,
+            lan: e.Lan,
+            pid: e.Parent,
+            children: [],
           })
         }
       } else if (responseData.Code == 3) {
