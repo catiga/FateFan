@@ -60,6 +60,11 @@
   import { reactive, ref } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { useForm, useModal, useToast, useColors } from 'vuestic-ui'
+  import { useGlobalStore } from '../../../../stores/global-store'
+  import { useRouter } from 'vue-router'
+
+  const GlobalStore = useGlobalStore()
+  const router = useRouter()
   const { t } = useI18n()
 
   const { init } = useToast()
@@ -103,9 +108,11 @@
       const response = await axios.get('/rpc/spwapi/admin/characters', {
         headers: {
           'Content-Type': 'application/json',
+          'auth-token': GlobalStore.loginAdmin.userToken,
         },
       })
-      if (response.data && response.data.Data) {
+      const responseData = response.data
+      if (responseData.Code == 0 && responseData.Data) {
         for (let e of response.data.Data) {
           characters.value.push({
             id: e.Id,
@@ -120,6 +127,10 @@
             code: e.Code,
           })
         }
+      } else if (responseData.Code == 3) {
+        router.replace('/auth/login')
+      } else {
+        init({ message: responseData.Msg, color: 'danger' })
       }
     } catch (err) {
       console.log('err:::', err)
@@ -132,9 +143,11 @@
       const response = await axios.get('/rpc/spwapi/admin/methods', {
         headers: {
           'Content-Type': 'application/json',
+          'auth-token': GlobalStore.loginAdmin.userToken,
         },
       })
-      if (response.data && response.data.Data) {
+      const responseData = response.data
+      if (responseData.Code == 0 && responseData.Data) {
         for (let e of response.data.Data) {
           methods.value.push({
             id: e.Id,
@@ -143,6 +156,10 @@
             code: e.Code,
           })
         }
+      } else if (responseData.Code == 3) {
+        router.replace('/auth/login')
+      } else {
+        init({ message: responseData.Msg, color: 'danger' })
       }
     } catch (err) {
       console.log('err:::', err)

@@ -126,6 +126,11 @@
   import { ref, onMounted, reactive } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { useToast } from 'vuestic-ui'
+  import { useGlobalStore } from '../../../../stores/global-store'
+  import { useRouter } from 'vue-router'
+
+  const GlobalStore = useGlobalStore()
+  const router = useRouter()
 
   interface CharRole {
     id: number
@@ -213,9 +218,11 @@
       const response = await axios.get('/rpc/spwapi/admin/characters', {
         headers: {
           'Content-Type': 'application/json',
+          'auth-token': GlobalStore.loginAdmin.userToken,
         },
       })
-      if (response.data && response.data.Data) {
+      const responseData = response.data
+      if (responseData.Code == 0 && responseData.Data) {
         for (let e of response.data.Data) {
           characters.value.push({
             id: e.Id,
@@ -230,6 +237,10 @@
             code: e.Code,
           })
         }
+      } else if (responseData.Code == 3) {
+        router.replace('/auth/login')
+      } else {
+        init({ message: responseData.Msg, color: 'danger' })
       }
     } catch (err) {
       console.log('err:::', err)
@@ -243,9 +254,11 @@
       const response = await axios.post('/rpc/spwapi/admin/charsettings', qs.stringify({ lan: lan, code: code }), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
+          'auth-token': GlobalStore.loginAdmin.userToken,
         },
       })
-      if (response.data && response.data.Data) {
+      const responseData = response.data
+      if (responseData.Code == 0 && responseData.Data) {
         for (let e of response.data.Data) {
           charsettings.value.push({
             id: e.Id,
@@ -257,6 +270,10 @@
             answer: e.Answer,
           })
         }
+      } else if (responseData.Code == 3) {
+        router.replace('/auth/login')
+      } else {
+        init({ message: responseData.Msg, color: 'danger' })
       }
     } catch (err) {
       console.log('err:::', err)
@@ -284,11 +301,19 @@
         {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+            'auth-token': GlobalStore.loginAdmin.userToken,
           },
         },
       )
-      init({ message: 'success', color: 'success' })
-      handleCharSettings(selectChar?.value.code, selectChar?.value.lan)
+      const responseData = response.data
+      if (responseData.Code == 0) {
+        init({ message: 'success', color: 'success' })
+        handleCharSettings(selectChar?.value.code, selectChar?.value.lan)
+      } else if (responseData.Code == 3) {
+        router.replace('/auth/login')
+      } else {
+        init({ message: responseData.Msg, color: 'danger' })
+      }
     } catch (err) {
       console.log('err:::', err)
       init({ message: 'Network Error', color: 'danger' })
@@ -307,10 +332,18 @@
       const response = await axios.post('/rpc/spwapi/admin/charsetdel', qs.stringify({ setid: item.id }), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
+          'auth-token': GlobalStore.loginAdmin.userToken,
         },
       })
-      init({ message: 'success', color: 'success' })
-      handleCharSettings(selectChar.value.code, selectChar.value.lan)
+      const responseData = response.data
+      if (responseData.Code == 0) {
+        init({ message: 'success', color: 'success' })
+        handleCharSettings(selectChar.value.code, selectChar.value.lan)
+      } else if (responseData.Code == 3) {
+        router.replace('/auth/login')
+      } else {
+        init({ message: responseData.Msg, color: 'danger' })
+      }
     } catch (err) {
       console.log('err:::', err)
       init({ message: 'Network Error', color: 'danger' })

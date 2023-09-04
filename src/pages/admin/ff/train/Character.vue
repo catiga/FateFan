@@ -111,9 +111,14 @@
   import qs from 'qs'
   import { ref, watchEffect, reactive } from 'vue'
   import { useI18n } from 'vue-i18n'
+  import { useRouter } from 'vue-router'
   import { useForm, useModal, useToast, useColors } from 'vuestic-ui'
   import { onMounted } from 'vue'
   import UploadOss from '../../../../components/UploadOss.vue'
+  import { useGlobalStore } from '../../../../stores/global-store'
+
+  const GlobalStore = useGlobalStore()
+  const router = useRouter()
 
   const lanList = ref([
     {
@@ -187,12 +192,15 @@
   const handleCharList = async () => {
     characters.value.splice(0, characters.value.length, ...[])
     try {
+      console.log('Auth-Token....', GlobalStore.loginAdmin)
       const response = await axios.get('/rpc/spwapi/admin/characters', {
         headers: {
           'Content-Type': 'application/json',
+          'Auth-Token': GlobalStore.loginAdmin.userToken,
         },
       })
-      if (response.data && response.data.Data) {
+      const responseData = response.data
+      if (responseData.Code == 0 && responseData.Data) {
         for (let e of response.data.Data) {
           characters.value.push({
             id: e.Id,
@@ -212,6 +220,10 @@
           })
         }
         listLoops.value = characters.value.length
+      } else if (responseData.Code == 3) {
+        router.replace('/auth/login')
+      } else {
+        init({ message: responseData.Msg, color: 'danger' })
       }
     } catch (err) {
       console.log('err:::', err)
@@ -243,13 +255,17 @@
       const response = await axios.post('/rpc/spwapi/admin/characteradd', qs.stringify(form), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
+          'auth-token': GlobalStore.loginAdmin.userToken,
         },
       })
-      if (response.data && response.data.Code == 0) {
+      const responseData = response.data
+      if (responseData.Code == 0 && responseData.Data) {
         init({ message: 'success', color: 'success' })
         handleCharList()
+      } else if (responseData.Code == 3) {
+        router.replace('/auth/login')
       } else {
-        init({ message: response.data.Msg, color: 'danger' })
+        init({ message: responseData.Msg, color: 'danger' })
       }
     } catch (err) {
       console.log('err:::', err)
