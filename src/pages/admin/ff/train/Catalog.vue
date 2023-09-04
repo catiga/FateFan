@@ -83,6 +83,15 @@
     id: number
   }
 
+  interface CatMod {
+    id: number
+    label: string
+    code: string
+    lan: string
+    pid: number
+  }
+
+  const submitPlace = ref(false)
   const { init } = useToast()
   const GlobalStore = useGlobalStore()
   const router = useRouter()
@@ -110,7 +119,7 @@
     },
   ])
 
-  const handleSonList = async (pid) => {
+  const handleSonList = async (pid: number) => {
     try {
       const response = await axios.post('/rpc/spwapi/admin/catalog/list', qs.stringify({ lan: 'zh-CN', pid: pid }), {
         headers: {
@@ -173,6 +182,7 @@
   }
 
   const handleSave = async () => {
+    submitPlace.value = true
     try {
       const data = { code: form.code, name: form.name, lan: form.lan?.code, pid: form.parent?.id, id: form.id ?? 0 }
       const response = await axios.post('/rpc/spwapi/admin/catalog/add', qs.stringify(data), {
@@ -193,6 +203,7 @@
       console.log('err:::', err)
       init({ message: 'Network Error', color: 'danger' })
     }
+    submitPlace.value = false
   }
 
   const removeSels = async () => {
