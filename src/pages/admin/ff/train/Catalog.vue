@@ -43,7 +43,7 @@
           <va-list-item class="mb-2" clickable>
             <va-list-item-section>
               <va-list-item-label>生效语言</va-list-item-label>
-              <va-select v-model="form.lan" class="mb-4" :options="lanList" track-by="code" text-by="name" clearable />
+              <va-select v-model="form.lan" class="mb-4" :options="lanList" track-by="code" text-by="name" />
             </va-list-item-section>
           </va-list-item>
 
@@ -71,6 +71,18 @@
   import UploadOss from '../../../../components/UploadOss.vue'
   import { useGlobalStore } from '../../../../stores/global-store'
 
+  interface Lan {
+    code: string
+    name: string
+  }
+  interface CatInfo {
+    code: string
+    name: string
+    lan: Lan
+    parent: { id: number }
+    id: number
+  }
+
   const { init } = useToast()
   const GlobalStore = useGlobalStore()
   const router = useRouter()
@@ -79,7 +91,13 @@
 
   const catalogData = ref([])
 
-  const form = reactive({})
+  const form = reactive<CatInfo>({
+    code: '',
+    name: '',
+    lan: { code: '', name: '' },
+    parent: { id: 0 },
+    id: 0,
+  })
 
   const lanList = ref([
     {
